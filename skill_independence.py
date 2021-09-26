@@ -15,10 +15,13 @@ def readin(var,model,type):
                    '_SSP245_r1i1p1f1_K_1850_2100.nc')
 
     ds = xr.open_dataset(var)
-
+    
+    ### Select time period to benchmark to 
     if type == 'original':
         ds = ds.sel(time = slice('1989-01-01','2005-12-31'))
         ds = ds.sel(time=~((ds.time.dt.month == 2) & (ds.time.dt.day == 29)))
+    
+    ### Select time period for ensemble mean
     elif type == 'toweight':
         ds = ds.sel(time = slice('1851-01-01','2100-12-31'))
         ds = ds.sel(time=~((ds.time.dt.month == 2) & (ds.time.dt.day == 29)))
